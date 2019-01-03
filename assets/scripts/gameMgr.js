@@ -79,5 +79,17 @@ cc.Class({
     addOneItem(){
         var newItem = cc.instantiate(this.itemPrefab);
         newItem.setPosition(0,0);
+
+        for(var x in this.backGroundNodes){
+            var item = this.backGroundNodes[x].getComponent("backgroundMgr").item;
+            if(item == null){
+                //indicate that the background node is empty
+                //add one item to this background node
+                newItem.getComponent("itemMgr").refreshItemData();
+                this.backGroundNodes[x].addChild(newItem);
+                this.backGroundNodes[x].getComponent("backgroundMgr").item = newItem;
+                break;
+            }
+        }
     },
 });

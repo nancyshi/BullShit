@@ -32,7 +32,13 @@ cc.Class({
 
     // LIFE-CYCLE CALLBACKS:
 
-    // onLoad () {},
+    onLoad () {
+        //registe touch events
+        this.node.on("touchstart",this.touchesBegan,this);
+        this.node.on("touchmove",this.touchesMoved,this);
+        this.node.on("touchend",this.touchesEnd,this);
+        this.node.on("touchcancel",this.touchesCanceled,this);
+    },
 
     start () {
 
@@ -65,5 +71,26 @@ cc.Class({
         label.string = this.level;
     },
 
+    touchesBegan(event){
+        
+    },
+    touchesMoved(event) {
+        var x = event.getLocationX();
+        var y = event.getLocationY();
+        
+    },
+    touchesEnd(event){
+        
+    },
+    touchesCanceled(event){
+        
+    },
+
     // update (dt) {},
+    onDestroy(){
+        this.node.off("touchstart",this.touchesBegan,this);
+        this.node.off("touchmoved",this.touchesMoved,this);
+        this.node.off("touchend",this.touchesEnd,this);
+        this.node.off("touchcancel",this.touchesCanceled,this);
+    },
 });

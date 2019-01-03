@@ -41,9 +41,9 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.8122523963562405,
-      "y": 0.8122523963562405,
-      "z": 0.8122523963562405
+      "x": 0.527197265625,
+      "y": 0.527197265625,
+      "z": 0.527197265625
     },
     "_quat": {
       "__type__": "cc.Quat",
@@ -55,7 +55,8 @@
     "_zIndex": 0,
     "_is3DNode": true,
     "groupIndex": 0,
-    "_id": "18mhq4aTdGP4S3tiBZKQiI"
+    "autoReleaseAssets": false,
+    "_id": "a449ec74-e200-4e69-acdb-89aa801519eb"
   },
   {
     "__type__": "cc.Node",

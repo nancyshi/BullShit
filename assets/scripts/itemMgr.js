@@ -28,6 +28,10 @@ cc.Class({
         //     }
         // },
         level: 1,
+        originPosition: {
+            default:null,
+            visible: false,
+        }
     },
 
     // LIFE-CYCLE CALLBACKS:
@@ -77,15 +81,42 @@ cc.Class({
     touchesMoved(event) {
         var x = event.getLocationX();
         var y = event.getLocationY();
+       // var helper = require("helper");
         
+        //var transedPoint = helper.pointInNode(new cc.Vec2(x,y),this.node.parent);
+        var transedPoint = this.node.parent.convertToNodeSpaceAR(cc.v2(x,y));   //when the node moved , convertToNodeSpaceAR can't work as respect
+        this.node.setPosition(transedPoint.x,transedPoint.y);
     },
     touchesEnd(event){
-        
+        //move valid check
+        if (this.isMoveValid() == false) {
+            this.goBack();
+        }
+        else {
+            
+        }
     },
     touchesCanceled(event){
         
     },
 
+    chechMoveValid(endPoint){
+
+    },
+    isMoveValid(){
+        var helper = require("helper");
+        var backgroundNodes = cc.find("Canvas/bgNodes").children;
+        for(var x in backgroundNodes){
+            if (helper.isOneNodeInAnotherNode(this.node,backgroundNodes[x]) == true) {
+                //valid
+                return true;
+            }
+        }
+        return false;
+    },
+    goBack(){
+        this.node.setPosition(this.originPosition);
+    },
     // update (dt) {},
     onDestroy(){
         this.node.off("touchstart",this.touchesBegan,this);

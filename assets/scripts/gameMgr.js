@@ -66,27 +66,30 @@ cc.Class({
 
     // update (dt) {},
     creatBg() {
+        var bgNodes = cc.find("Canvas/bgNodes");
         for(var x = 0; x < 16 ; x++) {
             var newBackGound = cc.instantiate(this.backGroundPrefab);
             var xPosition = -this.node.width / 2 + 65 + newBackGound.width / 2 + (x % 4) * (newBackGound.width + 30) ;
             var yPosition = this.node.height / 2 - 166 - newBackGound.height / 2 - Math.floor(x / 4) * (newBackGound.height + 30);
             newBackGound.setPosition(xPosition,yPosition);
-            this.node.addChild(newBackGound);
+            bgNodes.addChild(newBackGound);
             this.backGroundNodes[x] = newBackGound;
         }
     },
 
     addOneItem(){
         var newItem = cc.instantiate(this.itemPrefab);
-        newItem.setPosition(0,0);
+        newItem.zIndex = 100;
 
         for(var x in this.backGroundNodes){
             var item = this.backGroundNodes[x].getComponent("backgroundMgr").item;
             if(item == null){
                 //indicate that the background node is empty
-                //add one item to this background node
                 newItem.getComponent("itemMgr").refreshItemData();
-                this.backGroundNodes[x].addChild(newItem);
+                var itemsNodes = cc.find("Canvas/itemNodes");
+                newItem.setPosition(this.backGroundNodes[x].position);
+                newItem.getComponent("itemMgr").originPosition = newItem.position;
+                itemsNodes.addChild(newItem);
                 this.backGroundNodes[x].getComponent("backgroundMgr").item = newItem;
                 break;
             }
